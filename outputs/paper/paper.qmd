@@ -1,15 +1,14 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Analysis of shooting incidents trend in Toronto from 2004 to 2023"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Hyungsoo Park
+thanks: "https://github.com/kakaomonk/totonro_shooting_incidents"
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "The research analyzes the trends of shooting incidents by firearm in Toronto from 2004 to 2023.The used dataset that is from Opendatatoronto provides all shooting incidents that was happened in Toronto throughout the period. In addition, this study also shows the urban violence in Toronto. Fourth sentence."
 format: pdf
 number-sections: true
+toc: true
 bibliography: references.bib
 ---
 
@@ -20,120 +19,81 @@ bibliography: references.bib
 
 library(tidyverse)
 library(palmerpenguins)
+library(dplyr)
+library(knitr)
 ```
-
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. 
+Owning firearm by individual has been became a major social issue in Toronto and other urban areas in North America. However, the owning firearm by individual cannot be illegalized since some citizens need the firearm inevitably. The urban violence by firearm in Toronto has been become an object of public concern and being more seriously. Beyond the controversy the study mainly focuses on the trend of firearm shooting incident in Toronto from 2004 to 2023, and there was a significant changes on the trend and the change was enought to make the issue be more controversial.
 
-The remainder of this paper is structured as follows. @sec-data....
+The firearm violence affect to several social community and it is directly related to the social safety in all communities in Toronto. In addition, Toronto is a large city that is multi-cultural and full of diversities. However, they might cause the hate issues because of the difference between the cultures.
+
+The trends of firearm shooting incident in Toronto throughout the period is depended on many factors from the society, but the purpose of the study is exploring the general trends of firearm shooting incidents in Toronto. Analyzing the incident trends will significantly decrease firearm incidents in Toronto, and derive better laws and rules to the society for the citizens' safety.
+
+
+Since the shooting incidents by gunfire has been become a social issue
+
+
 
 
 
 # Data {#sec-data}
 
+The used dataset contains all firearm incidents that caused death and injuries in Toronto from 2004 to 2023, and the dataset is from 'opendatatoronto' 'R' package [@citeOpendatatoronto]. The dataset can be found on 'opendatatoronto' website named with "About Shootings & Firearm Discharges". All used technologies are done by 'R' [@citeR], 'ggplot2' [@citeGGplot2], and 'knitr'[@citeKnitr].
+
+## Data Cleaning
+The purpose of the study is to analyze the trends of firearm incidents in Toronto from 2004 to 2023. The preserved columns are related to the date of occurrence and the area code. All columns that are not related to the future analysis were removed. For accurate result, every invalid data that contains uncertain data was omitted and it was not used for the study.
+
+## Data 
 Some of our data is of penguins (@fig-bills), from @palmerpenguins.
-
+The count
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
-#| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
 #| echo: false
 #| warning: false
 #| message: false
+#| tbl-cap: "Number of firearm shooting incidents by year"
+cleaned_data <- read_csv("/cloud/project/outputs/data/cleaned_shooting_incidents.csv")
 
-analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
+incidents_by_year <- cleaned_data |>
+  group_by(OCC_YEAR) |>
+  count(name = "Incidents")
+kable(incidents_by_year)
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
 ```
-
-Talk way more about it. 
-
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
 
 
 # Results
 
 Our results are summarized in @tbl-modelresults.
 
-```{r}
+#```{r}
 #| echo: false
 #| eval: true
 #| warning: false
 #| message: false
 
-library(rstanarm)
+#library(rstanarm)
+#
+#first_model <-
+#  readRDS(file = here::here("outputs/models/first_model.rds"))
+#```
 
-first_model <-
-  readRDS(file = here::here("outputs/models/first_model.rds"))
-```
-
-```{r}
+#```{r}
 #| echo: false
 #| eval: true
 #| label: tbl-modelresults
 #| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
 #| warning: false
 
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
-```
+#modelsummary::modelsummary(
+#  list(
+#    "First model" = first_model
+#  ),
+#  statistic = "mad",
+#  fmt = 2
+#)
+#```
 
 
 
@@ -179,15 +139,15 @@ In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. Th
 #| fig-cap: "Examining how the model fits, and is affected by, the data"
 #| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
 
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
+#pp_check(first_model) +
+#  theme_classic() +
+#  theme(legend.position = "bottom")
+#
+#posterior_vs_prior(first_model) +
+#  theme_minimal() +
+#  scale_color_brewer(palette = "Set1") +
+#  theme(legend.position = "bottom") +
+#  coord_flip()
 ```
 
 ## Diagnostics
@@ -206,9 +166,9 @@ posterior_vs_prior(first_model) +
 #| fig-subcap: ["Trace plot", "Rhat plot"]
 #| layout-ncol: 2
 
-plot(first_model, "trace")
+#plot(first_model, "trace")
 
-plot(first_model, "rhat")
+#plot(first_model, "rhat")
 ```
 
 
