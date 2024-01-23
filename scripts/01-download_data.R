@@ -30,4 +30,4 @@ data <- filter(datastore_resources, row_number()==1) %>% get_resource()
 data
 
 #### Save data ####
-write_csv(data, "inputs/data/unedited_shooting.csv")
+write_csv(data, "inputs/data/unedited_shooting_incidents.csv")
