@@ -63,7 +63,7 @@ kable(incidents_by_year)
 ```
 
 
-# Results
+# Results   
 
 Our results are summarized in @tbl-modelresults.
 
