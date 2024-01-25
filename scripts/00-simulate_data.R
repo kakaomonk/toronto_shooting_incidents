@@ -10,17 +10,17 @@
 
 #### Workspace setup ####
 library(tidyverse)
-# [...UPDATE THIS...]
-
 
 #### Simulate data ####
-# [...ADD CODE HERE...]
 # set seed for the simulation
 set.seed(1002415488)
-
-# set a sequence of dates from 2004 to 2024
-
-# set
+number_simulations <- 1000
+# set a sequence of dates (year) from 2004 to 2024 and divisions.
+years <- c(2004:2023)
+divisions <- c("D11", "D12", "D13", "D14", "D22","D23","D31","D32","D33","D41",
+               "D42","D43","D51","D52","D53","D54","D55")
+# Simulate 1000 times
+rep(c(sample(years), sample(divisions)))
 
 
 
