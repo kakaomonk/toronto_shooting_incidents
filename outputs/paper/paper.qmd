@@ -2,10 +2,10 @@
 title: "Analysis of shooting incidents trend in Toronto from 2004 to 2023"
 author: 
   - Hyungsoo Park
-thanks: "https://github.com/kakaomonk/totonro_shooting_incidents"
-date: today
+thanks: "https://github.com/kakaomonk/toronto_shooting_incidents"
+date: January 23, 2024
 date-format: long
-abstract: "The research analyzes the trends of shooting incidents by firearm in Toronto from 2004 to 2023.The used dataset that is from Opendatatoronto provides all shooting incidents that was happened in Toronto throughout the period. In addition, this study also shows the urban violence in Toronto. Fourth sentence."
+abstract: "The research analyzes the trends of firearm shooting incidents by firearm in Toronto from 2004 to 2023, and the used dataset from Opendatatoronto provides all shooting incidents that happened in Toronto throughout the period. In addition, this study also shows the urban violence in Toronto and area in danger. The trend of firearm incident cases increased significantly from 2015. It decreased from 2020, the year the lockdown started, because of COVID-19, but the City of Toronto should consider stricter laws and rules since the decreasing trend might be because of the COVID-19 lockdown."
 format: pdf
 number-sections: true
 toc: true
@@ -16,166 +16,89 @@ bibliography: references.bib
 #| include: false
 #| warning: false
 #| message: false
-
 library(tidyverse)
-library(palmerpenguins)
 library(dplyr)
 library(knitr)
+library(ggplot2)
+library(here)
 ```
 
 # Introduction
 
-Owning firearm by individual has been became a major social issue in Toronto and other urban areas in North America. However, the owning firearm by individual cannot be illegalized since some citizens need the firearm inevitably. The urban violence by firearm in Toronto has been become an object of public concern and being more seriously. Beyond the controversy the study mainly focuses on the trend of firearm shooting incident in Toronto from 2004 to 2023, and there was a significant changes on the trend and the change was enought to make the issue be more controversial.
+Owning firearms by individuals has become a major social issue in Toronto and other urban areas in North America. However, possessing a firearm by an individual cannot be illegalized since some citizens need the firearm inevitably. The urban violence by firearm in Toronto has become an object of public concern and is becoming more serious. Beyond the controversy, the study mainly focuses on the trend of firearm shooting incidents in Toronto from 2004 to 2023. There were significant changes in the trend, and the change was enough to make the issue more controversial [@citeTorontostar].
 
-The firearm violence affect to several social community and it is directly related to the social safety in all communities in Toronto. In addition, Toronto is a large city that is multi-cultural and full of diversities. However, they might cause the hate issues because of the difference between the cultures.
+Firearm violence affects several social communities, and it is directly related to social safety in all communities in Toronto. In addition, Toronto is a large city that is multicultural and full of diversity. However, they might cause hate because of the differences between the cultures.
 
-The trends of firearm shooting incident in Toronto throughout the period is depended on many factors from the society, but the purpose of the study is exploring the general trends of firearm shooting incidents in Toronto. Analyzing the incident trends will significantly decrease firearm incidents in Toronto, and derive better laws and rules to the society for the citizens' safety.
-
-
-Since the shooting incidents by gunfire has been become a social issue
-
-
-
-
+The trends of firearm shooting incidents in Toronto throughout the period depended on many factors from the society, but the purpose of the study is to explore the general trends of firearm shooting incidents in Toronto. Analyzing the incident trends will significantly decrease firearm incidents in Toronto and derive better laws and rules for the society for the citizens' safety.
 
 # Data {#sec-data}
-
-The used dataset contains all firearm incidents that caused death and injuries in Toronto from 2004 to 2023, and the dataset is from 'opendatatoronto' 'R' package [@citeOpendatatoronto]. The dataset can be found on 'opendatatoronto' website named with "About Shootings & Firearm Discharges". All used technologies are done by 'R' [@citeR], 'ggplot2' [@citeGGplot2], and 'knitr'[@citeKnitr].
+The dataset used contains all firearm incidents that caused death and injuries in Toronto from 2004 to 2023, and the dataset is from the 'opendatatoronto' 'R' package [@citeOpendatatoronto]. The dataset can be found on 'opendatatoronto' website named "About Shootings & Firearm Discharges" [@citeDataset]. All used technologies are done by 'R' [@citeR], 'ggplot2' [@citeGGplot2], 'knitr'[@citeKnitr], 'tidyverse' [@citeTidyverse], and 'here' [@citeHere].
 
 ## Data Cleaning
-The purpose of the study is to analyze the trends of firearm incidents in Toronto from 2004 to 2023. The preserved columns are related to the date of occurrence and the area code. All columns that are not related to the future analysis were removed. For accurate result, every invalid data that contains uncertain data was omitted and it was not used for the study.
+The purpose of the study is to analyze the trends of firearm incidents in Toronto from 2004 to 2023, and the dataset is obtained from 'opendatatoronto' [@citeOpendatatoronto]. The preserved columns are related to the date of occurrence and the area code. All columns that are not related to the future analysis were removed. For accurate results, every invalid data that contains uncertain data was omitted, and it was not used for the study.
 
-## Data 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
-The count
+## Data
+
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
+#| label: tbl-year-incidents
 #| tbl-cap: "Number of firearm shooting incidents by year"
-cleaned_data <- read_csv("/cloud/project/outputs/data/cleaned_shooting_incidents.csv")
+cleaned_data <- read_csv(here("outputs/data/cleaned_shooting_incidents.csv"))
 
 incidents_by_year <- cleaned_data |>
   group_by(OCC_YEAR) |>
   count(name = "Incidents")
 kable(incidents_by_year)
-
 ```
 
-
-# Results   
-
-Our results are summarized in @tbl-modelresults.
-
-#```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-#library(rstanarm)
-#
-#first_model <-
-#  readRDS(file = here::here("outputs/models/first_model.rds"))
-#```
-
-#```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-#modelsummary::modelsummary(
-#  list(
-#    "First model" = first_model
-#  ),
-#  statistic = "mad",
-#  fmt = 2
-#)
-#```
-
-
-
-
-# Discussion
-
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
-
-\newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
+The @tbl-year-incidents shows the number of firearm incident cases by each year, and trend of firearm incident cases had been increased from 2015 significantly. Furthermore, the following visualized graph @fig-trend shows the trend more intuitively.
 ```{r}
-#| eval: true
 #| echo: false
-#| message: false
 #| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
+#| message: false
+#| label: fig-trend
+#| tbl-cap: "Visualized number of firearm shooting incidents by year"
+incidents_by_year <- cleaned_data |>
+  group_by(OCC_YEAR)
 
-#pp_check(first_model) +
-#  theme_classic() +
-#  theme(legend.position = "bottom")
-#
-#posterior_vs_prior(first_model) +
-#  theme_minimal() +
-#  scale_color_brewer(palette = "Set1") +
-#  theme(legend.position = "bottom") +
-#  coord_flip()
+graph1 <- ggplot(incidents_by_year, aes(x=OCC_YEAR), binwidth=1) + 
+  geom_histogram(binwidth = 1, color="black", fill="white") +
+  geom_density(aes(y=..count..)) +
+  geom_hline(yintercept = 302.55)
+graph1
 ```
 
-## Diagnostics
 
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
+The visualized graph shows that there was a significant increase in firearm shooting incidents in Toronto from 2015. The line on the graph directly shows that the trend intuitively. In addition, the horizontal line is the average number of cases that is $302.55$ times per a year.
 
 ```{r}
 #| echo: false
-#| eval: true
-#| message: false
 #| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-#plot(first_model, "trace")
-
-#plot(first_model, "rhat")
+#| message: false
+#| tbl-cap: "Number of firearm shooting incidents by division"
+incidents_by_division <- cleaned_data |>
+  group_by(DIVISION) |>
+  count(name = "Incidents")
+kable(incidents_by_division)
 ```
-
-
+Now, some specific divisions/region that are exposed to the firearm shooting incidents, and divisions/regions need more attention from the City of Toronto.
 
 \newpage
+According to the table, division 31 (York University Heights, Humber Summit, Humbermede, Glenfield-Jane Heights, Oakdale Beverley Heights, Black Creek, Pelmo Park-Humberlea) has had the most shooting incidents in the past 20 years. On the other hand, division 53 (Yonge-St.Clair, Thorncliffe Park, Broadview North, Forest Hill North, Casa Loma, Forest Hill South, Annex, Rosedale-Moore Park, Mount Pleasant East, Mount Pleasant West, Bedford Park-Nortown, Bridle Path-Sunnybrook-York Mills, Lawrence Park South, Yonge-Eglinton, Leaside-Bennington) has the least firearm incidents in the past 20 years.
 
+# Results
+## Trends in firearm incidents
+According to @fig-trend, there were significant changes in the trend of firearm shooting incidents in the City of Toronto. Even if firearm incident cases have decreased since 2019, the City of Toronto and Toronto police need to be aware of the future trend since the lockdown because of COVID-19 and almost all citizens stayed at home during the pandemic. 
+
+## Area in danger
+On the other hand, Division 31 is the area most exposed to firearm shooting incidents, and 17% of all firearm shooting incidents in Toronto have occurred in Division 31. Therefore, police in the division should pay more attention to firearm incidents to protect the citizens and reinforce the patrol of crime-prone areas in Division 31.
+
+
+# Conclusion
+Based on the analysis, the 'City of Toronto' and the 'Toronto Police Service' could operate an enhanced protection system for citizens from gunfire violence in Toronto. The trends in gunfire shooting incidents in Toronto have improved since 2019, but they still need to strengthen the laws and rules about gunfire in Toronto for the citizens. The police in Division 53 especially need to improve patrol in the area. If the current trend continues, gunfire incidents will gradually decrease in Toronto.
+
+\newpage
 
 # References
-
-
