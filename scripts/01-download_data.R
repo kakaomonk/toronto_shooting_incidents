@@ -1,18 +1,17 @@
 #### Preamble ####
-# Purpose: Downloads and saves the data from [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Simulates the number of shooting incidents from 2004 to 2023
+# Author: Hyungsoo Park
+# Date: 21 January 2024
+# Contact: hyungsoo.park@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: NA
+# Any other information needed? NA
 
 
 #### Workspace setup ####
 library(opendatatoronto)
 library(tidyverse)
 library(dplyr)
-# [...UPDATE THIS...]
 
 #### Download data ####
 # get package
