@@ -1,4 +1,4 @@
-# Starter folder
+# Analysis of gunfire shooting accidents in Toronto from 2004 to 2023
 
 ## Overview
 This paper studies the trends of firearm shooting incidents that happened in Toronto from 2004 to 2023 and analyzes several factors of the incidents. The study's primary purpose is to improve the social safety level in Toronto. 
